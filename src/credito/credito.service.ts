@@ -45,7 +45,7 @@ export class CreditoService {
         throw new NotFoundException(`Cliente con el id ${createCreditoDto.cliente} no existe`);
       }
 
-      const newCredito = await this.creditoModel.create(createCreditoDto);
+      const newCredito = await this.creditoModel.create(createCreditoDto as any);
       cliente.status = true;
       cliente.creditos.unshift(newCredito);
       await cliente.save();
@@ -103,7 +103,7 @@ export class CreditoService {
     })
       .populate([
         { path: 'pagos' },
-        { 
+        {
           path: 'cliente',
           populate: {
             path: 'creditos'
@@ -130,20 +130,20 @@ export class CreditoService {
 
   async update(id: string, updateCreditoDto: UpdateCreditoDto, fecha: string) {
     try {
-      const creditoUpdate = await this.creditoModel.findByIdAndUpdate(id, updateCreditoDto, {new: true});
+      const creditoUpdate = await this.creditoModel.findByIdAndUpdate(id, updateCreditoDto, { new: true });
 
-      if(creditoUpdate.fecha_inicio === this.moment.fecha(fecha, 'DD/MM/YYYY')){
+      if (creditoUpdate.fecha_inicio === this.moment.fecha(fecha, 'DD/MM/YYYY')) {
         await this.cajaService.currentCaja(`${creditoUpdate.ruta}`, fecha)
         return creditoUpdate;
       }
-      
+
       let fechaSplit = creditoUpdate.fecha_inicio.split('/');
       let newFecha = `${fechaSplit[2]}-${fechaSplit[1]}-${fechaSplit[0]}`;
       await this.cajaService.currentCaja(`${creditoUpdate.ruta}`, newFecha);
       await this.cajaService.currentCaja(`${creditoUpdate.ruta}`, fecha);
-      
+
       return creditoUpdate;
-      
+
     } catch (error) {
       this.hanldeExceptions(error);
     }
@@ -152,10 +152,10 @@ export class CreditoService {
   async updateTurno(id: string, updateCreditoDto: UpdateCreditoDto) {
     try {
 
-      await this.creditoModel.findByIdAndUpdate(id, updateCreditoDto, {new: true});
+      await this.creditoModel.findByIdAndUpdate(id, updateCreditoDto, { new: true });
 
       return true;
-      
+
     } catch (error) {
       this.hanldeExceptions(error);
     }
@@ -166,21 +166,21 @@ export class CreditoService {
     try {
       const credito = await this.findOne(id);
 
-      const cliente = await this.clienteService.findOne(credito.cliente._id);
+      const cliente = await this.clienteService.findOne((credito.cliente as Cliente)._id.toString());
 
-      cliente.creditos = cliente.creditos.filter(cr => cr._id !== credito._id);
+      cliente.creditos = (cliente.creditos as any).filter(cr => cr._id !== (credito as any)._id);
       cliente.status = false;
       await cliente.save();
 
-      await this.creditoModel.findByIdAndRemove(id);
+      await this.creditoModel.findByIdAndDelete(id);
 
-      if(credito.fecha_inicio !== this.moment.nowWithFormat('DD/MM/YYYY')){
+      if (credito.fecha_inicio !== this.moment.nowWithFormat('DD/MM/YYYY')) {
         let queryFecha = credito.fecha_inicio.split('/');
         let newFecha = `${queryFecha[2]}-${queryFecha[1]}-${queryFecha[0]}`;
 
         await this.cajaService.currentCaja(`${credito.ruta}`, newFecha)
       }
-      
+
       await this.cajaService.currentCaja(`${credito.ruta}`, this.moment.nowWithFormat('YYYY-MM-DD'));
 
       return true;
@@ -201,7 +201,7 @@ export class CreditoService {
 
     credito.pagos.unshift(pago);
     credito.saldo = getSaldo(credito),
-    credito.abonos = getAbonos(credito);
+      credito.abonos = getAbonos(credito);
     credito.ultimo_pago = pago.fecha.split(" ")[0];
 
     await credito.save();
@@ -224,7 +224,7 @@ export class CreditoService {
       .populate('cliente')
       .populate('pagos')
 
-    if(!credito) throw new NotFoundException(`Credito con el id ${idCredito} no fue encontrado`);
+    if (!credito) throw new NotFoundException(`Credito con el id ${idCredito} no fue encontrado`);
 
     const calculadorDeAtrasos = new CalculadorDeAtrasos(credito, fecha);
 
@@ -232,18 +232,18 @@ export class CreditoService {
     const factura = calculadorDeAtrasos.getMessage();
     credito.atraso = calculadorDeAtrasos.calcularAtrasos();
 
-    if(credito.atraso > 5) {
+    if (credito.atraso > 5) {
       credito.state = 'MALO'
-    }else if(credito.atraso > 2 && credito.atraso < 5){
+    } else if (credito.atraso > 2 && credito.atraso < 5) {
       credito.state = 'REGULAR'
-    }else {
+    } else {
       credito.state = 'BUENO'
     }
 
     await credito.save();
 
     return factura
-  }  
+  }
 
   public async verificarSiElPagoEsMayor(idCredito: string, valor: number): Promise<boolean> {
 
@@ -275,12 +275,12 @@ export class CreditoService {
 
     if (credito.saldo === 0) {
       await credito.updateOne({ status: false });
-      await this.clienteService.update(credito.cliente._id, { status: false });
+      await this.clienteService.update((credito.cliente as Cliente)._id.toString(), { status: false });
       return;
     }
 
     await credito.updateOne({ status: true });
-    await this.clienteService.update(credito.cliente._id, { status: true });
+    await this.clienteService.update((credito.cliente as Cliente)._id.toString(), { status: true });
     return;
 
   }

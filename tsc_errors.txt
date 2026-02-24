@@ -1,0 +1,74 @@
+src/auth/auth.service.ts(121,7): error TS2322: Type 'User & Required<{ _id: ObjectId; }> & { __v: number; }' is not assignable to type 'Document<unknown, {}, User, {}, DefaultSchemaOptions> & User & Required<{ _id: ObjectId; }> & { __v: number; } & { id: string; }'.
+  Property 'id' is missing in type 'User & Required<{ _id: ObjectId; }> & { __v: number; }' but required in type '{ id: string; }'.
+src/auth/auth.service.ts(146,36): error TS2322: Type 'ObjectId' is not assignable to type 'string'.
+src/auth/strategies/jwt.strategy.ts(40,5): error TS2322: Type 'User & Required<{ _id: ObjectId; }> & { __v: number; }' is not assignable to type 'Document<unknown, {}, User, {}, DefaultSchemaOptions> & User & Required<{ _id: ObjectId; }> & { __v: number; } & { id: string; }'.
+  Property 'id' is missing in type 'User & Required<{ _id: ObjectId; }> & { __v: number; }' but required in type '{ id: string; }'.
+src/caja/caja.service.ts(133,55): error TS2339: Property 'valor_cuota' does not exist on type 'string | Credito'.
+  Property 'valor_cuota' does not exist on type 'string'.
+src/caja/caja.service.ts(134,81): error TS2339: Property 'valor_cuota' does not exist on type 'string | Credito'.
+  Property 'valor_cuota' does not exist on type 'string'.
+src/caja/caja.service.ts(165,36): error TS2339: Property 'fecha_inicio' does not exist on type 'string | Credito'.
+  Property 'fecha_inicio' does not exist on type 'string'.
+src/caja/caja.service.ts(198,29): error TS2339: Property '_id' does not exist on type 'string | Caja'.
+  Property '_id' does not exist on type 'string'.
+src/caja/caja.service.ts(245,37): error TS2339: Property 'valor_cuota' does not exist on type 'string | Credito'.
+  Property 'valor_cuota' does not exist on type 'string'.
+src/caja/caja.service.ts(246,44): error TS2339: Property 'valor_cuota' does not exist on type 'string | Credito'.
+  Property 'valor_cuota' does not exist on type 'string'.
+src/caja/caja.service.ts(317,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type 'string' is not assignable to type '{ _id?: string; fecha?: string; base?: number; inversion?: number; retiro?: number; gasto?: number; cobro?: number; prestamo?: number; total_clientes?: number; clientes_pendientes?: number; renovaciones?: number; caja_final?: number; pretendido?: number; extra?: number; ruta?: { ...; }; } | { ...; }'.
+src/cliente/cliente.service.ts(38,45): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'CreateClienteDto' is not assignable to parameter of type '{ status?: boolean; state?: boolean; dpi?: StringQueryTypeCasting; nombre?: StringQueryTypeCasting; alias?: StringQueryTypeCasting; ... 67 more ...; validateSync?: { ...; } | {}; }'.
+      Types of property 'ruta' are incompatible.
+        Type 'string' is not assignable to type '{ [x: string]: any; } | { nombre?: string; clientes?: number; clientes_activos?: number; gastos?: number; inversiones?: number; retiros?: number; ciudad?: string; cartera?: number; total_cobrado?: number; ... 72 more ...; validateSync?: { ...; }; }'.
+src/credito/credito.service.ts(48,57): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'CreateCreditoDto' is not assignable to parameter of type '{ pagos?: { fecha?: string; valor?: number; ruta?: string | { nombre?: string; clientes?: number; clientes_activos?: number; gastos?: number; inversiones?: number; retiros?: number; ciudad?: string; cartera?: number; ... 73 more ...; validateSync?: { ...; }; }; ... 60 more ...; validateSync?: { ...; }; }[] | ({ ...;...'.
+      Types of property 'pagos' are incompatible.
+        Type 'string[]' is not assignable to type '{ fecha?: string; valor?: number; ruta?: string | { nombre?: string; clientes?: number; clientes_activos?: number; gastos?: number; inversiones?: number; retiros?: number; ciudad?: string; cartera?: number; ... 73 more ...; validateSync?: { ...; }; }; ... 60 more ...; validateSync?: { ...; }; }[] | ({ ...; } | { ......'.
+          Type 'string[]' is not assignable to type '{ fecha?: string; valor?: number; ruta?: string | { nombre?: string; clientes?: number; clientes_activos?: number; gastos?: number; inversiones?: number; retiros?: number; ciudad?: string; cartera?: number; ... 73 more ...; validateSync?: { ...; }; }; ... 60 more ...; validateSync?: { ...; }; }[]'.
+            Type 'string' has no properties in common with type '{ fecha?: string; valor?: number; ruta?: string | { nombre?: string; clientes?: number; clientes_activos?: number; gastos?: number; inversiones?: number; retiros?: number; ciudad?: string; cartera?: number; ... 73 more ...; validateSync?: { ...; }; }; ... 60 more ...; validateSync?: { ...; }; }'.
+src/credito/credito.service.ts(169,57): error TS2345: Argument of type 'ObjectId' is not assignable to parameter of type 'string'.
+src/credito/credito.service.ts(175,31): error TS2339: Property 'findByIdAndRemove' does not exist on type 'Model<Credito, {}, {}, {}, Document<unknown, {}, Credito, {}, DefaultSchemaOptions> & Credito & Required<{ _id: ObjectId; }> & { ...; } & { ...; }, any, Credito>'.
+src/credito/credito.service.ts(278,40): error TS2345: Argument of type 'ObjectId' is not assignable to parameter of type 'string'.
+src/credito/credito.service.ts(283,38): error TS2345: Argument of type 'ObjectId' is not assignable to parameter of type 'string'.
+src/empresa/empresa.service.ts(138,5): error TS2322: Type 'Empresa & Required<{ _id: ObjectId; }> & { __v: number; }' is not assignable to type 'Document<unknown, {}, Empresa, {}, DefaultSchemaOptions> & Empresa & Required<{ _id: ObjectId; }> & { __v: number; } & { ...; }'.
+  Property 'id' is missing in type 'Empresa & Required<{ _id: ObjectId; }> & { __v: number; }' but required in type '{ id: string; }'.
+src/empresa/empresa.service.ts(213,9): error TS2740: Type 'ObjectId' is missing the following properties from type 'Empresa': name, email, phone, dayOfPay, and 58 more.
+src/empresa/empresa.service.ts(237,73): error TS2345: Argument of type 'ObjectId' is not assignable to parameter of type 'Document<ObjectId, any, any, Record<string, any>, {}>'.
+  Type 'ObjectId' is missing the following properties from type 'Document<ObjectId, any, any, Record<string, any>, {}>': $assertPopulated, $clearModifiedPaths, $clone, $createModifiedPathsSnapshot, and 49 more.
+src/empresa/empresa.service.ts(266,9): error TS2322: Type 'ObjectId' is not assignable to type 'string | Empresa'.
+  Type 'ObjectId' is missing the following properties from type 'Empresa': name, email, phone, dayOfPay, and 58 more.
+src/empresa/empresa.service.ts(289,7): error TS2740: Type 'ObjectId' is missing the following properties from type 'User': nombre, estado, username, rol, and 57 more.
+src/empresa/empresa.service.ts(290,7): error TS2740: Type 'ObjectId' is missing the following properties from type 'Empresa': name, email, phone, dayOfPay, and 58 more.
+src/empresa/empresa.service.ts(331,43): error TS2345: Argument of type 'ObjectId' is not assignable to parameter of type 'string'.
+src/empresa/empresa.service.ts(332,41): error TS2345: Argument of type 'ObjectId' is not assignable to parameter of type 'string'.
+src/gasto/gasto.service.ts(30,36): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'CreateGastoDto' is not assignable to parameter of type '{ gasto?: { gasto?: string; } | { gasto?: StringQueryTypeCasting; }; fecha?: Date | { toString?: (() => string) | {}; toDateString?: (() => string) | {}; toTimeString?: (() => string) | {}; ... 41 more ...; [Symbol.toPrimitive]?: { ...; } | {}; }; valor?: number; nota?: StringQueryTypeCasting; ruta?: { ...; } | { .....'.
+      Types of property 'gasto' are incompatible.
+        Type 'string' is not assignable to type '{ gasto?: string; } | { gasto?: StringQueryTypeCasting; }'.
+src/inversion/inversion.service.ts(25,58): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'CreateInversionDto' is not assignable to parameter of type '{ fecha?: StringQueryTypeCasting; valor?: number; nota?: StringQueryTypeCasting; ruta?: { [x: string]: any; } | { nombre?: string; clientes?: number; ... 79 more ...; validateSync?: { ...; }; }; _id?: ObjectId | { ...; }; }'.
+      Types of property 'ruta' are incompatible.
+        Type 'string' is not assignable to type '{ [x: string]: any; } | { nombre?: string; clientes?: number; clientes_activos?: number; gastos?: number; inversiones?: number; retiros?: number; ciudad?: string; cartera?: number; total_cobrado?: number; ... 72 more ...; validateSync?: { ...; }; }'.
+src/retiro/retiro.service.ts(25,52): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'CreateRetiroDto' is not assignable to parameter of type '{ fecha?: StringQueryTypeCasting; valor?: number; nota?: StringQueryTypeCasting; ruta?: { [x: string]: any; } | { nombre?: string; clientes?: number; ... 79 more ...; validateSync?: { ...; }; }; _id?: ObjectId | { ...; }; }'.
+      Types of property 'ruta' are incompatible.
+        Type 'string' is not assignable to type '{ [x: string]: any; } | { nombre?: string; clientes?: number; clientes_activos?: number; gastos?: number; inversiones?: number; retiros?: number; ciudad?: string; cartera?: number; total_cobrado?: number; ... 72 more ...; validateSync?: { ...; }; }'.
+src/ruta/ruta.service.ts(141,37): error TS2339: Property '_id' does not exist on type 'string | Caja'.
+  Property '_id' does not exist on type 'string'.
+src/ruta/ruta.service.ts(144,60): error TS2339: Property '_id' does not exist on type 'string | Caja'.
+  Property '_id' does not exist on type 'string'.
+src/ruta/ruta.service.ts(180,7): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type 'string' is not assignable to type '{ [x: string]: any; } | { nombre?: string; clientes?: number; clientes_activos?: number; gastos?: number; inversiones?: number; retiros?: number; ciudad?: string; cartera?: number; total_cobrado?: number; ... 72 more ...; validateSync?: { ...; }; }'.
+src/ruta/ruta.service.ts(193,30): error TS2339: Property 'caja_final' does not exist on type 'string | Caja'.
+  Property 'caja_final' does not exist on type 'string'.
+src/ruta/ruta.service.ts(194,36): error TS2339: Property 'caja_final' does not exist on type 'string | Caja'.
+  Property 'caja_final' does not exist on type 'string'.
+src/ruta/ruta.service.ts(285,24): error TS2345: Argument of type 'ObjectId' is not assignable to parameter of type 'string'.

@@ -20,7 +20,7 @@ export class ClienteService {
 
     @InjectModel(Credito.name)
     private creditoModel: Model<Credito>
-  ){}
+  ) { }
 
   async create(createClienteDto: CreateClienteDto): Promise<Cliente> {
 
@@ -29,13 +29,13 @@ export class ClienteService {
       ruta: createClienteDto.ruta
     });
 
-    if(verificarSiExisteclientePorDpi) {
+    if (verificarSiExisteclientePorDpi) {
       throw new BadRequestException(`Ya existe el cliente ${verificarSiExisteclientePorDpi.alias} en la ruta`);
     }
 
     try {
 
-      return await this.clienteModel.create(createClienteDto);
+      return await this.clienteModel.create(createClienteDto as any);
 
     } catch (error) {
       this.handleExceptions(error)
@@ -44,17 +44,17 @@ export class ClienteService {
   }
 
   async findAll(status: boolean, idRuta: string): Promise<Cliente[]> {
-      return await this.clienteModel.find({
-        ruta: idRuta,
-        status
-      })
+    return await this.clienteModel.find({
+      ruta: idRuta,
+      status
+    })
       .populate({
         path: "creditos"
       })
 
   }
 
-  async findByAdmin( idRuta: string ): Promise<Cliente[]> {
+  async findByAdmin(idRuta: string): Promise<Cliente[]> {
     return await this.clienteModel.find({
       ruta: idRuta,
     }).populate({
@@ -68,16 +68,16 @@ export class ClienteService {
 
   async getHistorial(id: string): Promise<Credito[]> {
 
-    const creditos = await this.creditoModel.find({cliente: id});
+    const creditos = await this.creditoModel.find({ cliente: id });
 
-    const creditosFiltrados = creditos.sort((a,b) => addDate(b.fecha_inicio).getTime() - addDate(a.fecha_inicio).getTime())
+    const creditosFiltrados = creditos.sort((a, b) => addDate(b.fecha_inicio).getTime() - addDate(a.fecha_inicio).getTime())
 
     return creditosFiltrados;
 
   }
 
   async findOne(termino: string) {
-    
+
     const cliente = await this.clienteModel.findById(termino)
       .populate({
         path: "creditos",
@@ -86,19 +86,19 @@ export class ClienteService {
         }
       })
 
-    if(!cliente) throw new NotFoundException("No existe el cliente");
+    if (!cliente) throw new NotFoundException("No existe el cliente");
 
     return cliente;
 
   }
 
   async update(id: string, updateClienteDto: UpdateClienteDto): Promise<boolean> {
-    
+
     const cliente = await this.findOne(id);
 
     try {
 
-      await cliente.updateOne(updateClienteDto, {new: true});
+      await cliente.updateOne(updateClienteDto, { new: true });
 
       return true;
 
@@ -112,13 +112,13 @@ export class ClienteService {
 
   async remove(id: string) {
     const client = await this.findOne(id);
-    await client.updateOne({state: false}, {new: true});
+    await client.updateOne({ state: false }, { new: true });
 
     return true;
   }
 
   private handleExceptions(error: any) {
-    if(error.code === 11000){
+    if (error.code === 11000) {
       throw new BadRequestException("Ya existe este cliente")
     }
 

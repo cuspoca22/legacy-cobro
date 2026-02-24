@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
 import { Cliente } from '../../cliente/entities/cliente.entity';
-import mongoose, {Document} from "mongoose";
+import mongoose, { Document } from "mongoose";
 import { Credito } from '../../credito/entities/credito.entity';
 import { Ruta } from '../../ruta/entities/ruta.entity';
 
@@ -9,30 +9,30 @@ export class Pago extends Document {
    @Prop({
       type: String
    })
-   fecha: string; 
+   fecha: string;
 
    @Prop({
       type: Number
    })
-   valor: number; 
+   valor: number;
 
    @Prop({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Ruta'
    })
-   ruta: Ruta; 
+   ruta: Ruta | string;
 
    @Prop({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Credito'
    })
-   credito: Credito; 
+   credito: Credito | string;
 
    @Prop({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Cliente'
    })
-   cliente: Cliente;
+   cliente: Cliente | string;
 
    @Prop({
       type: String

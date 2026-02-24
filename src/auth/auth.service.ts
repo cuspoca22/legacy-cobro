@@ -64,7 +64,7 @@ export class AuthService {
          .populate({
             path: "ruta"
          })
-      
+
       if (!user) {
 
          await this.logAuth.create({
@@ -90,8 +90,9 @@ export class AuthService {
          throw new UnauthorizedException("Datos Incorrectos")
       }
 
-      if(user.ruta  && user.rol === 'COBRADOR') {
-         if (!user.ruta.status) {   
+      if (user.ruta && user.rol === 'COBRADOR') {
+         const ruta = user.ruta as any;
+         if (!ruta.status) {
 
             await this.logAuth.create({
                user: user._id,
@@ -104,7 +105,7 @@ export class AuthService {
             throw new UnauthorizedException("Ruta cerrada hable con su administrador")
          }
 
-         if(user.ruta.isLocked) {
+         if (ruta.isLocked) {
 
             await this.logAuth.create({
                user: user._id,
@@ -118,12 +119,12 @@ export class AuthService {
          }
       }
 
-      user = user.toObject();
-      delete user.password;
-      delete user.__v;
+      const userPlain = user.toObject();
+      delete (userPlain as any).password;
+      delete (userPlain as any).__v;
 
       return {
-         user,
+         user: userPlain as any,
          token: this.getJwtToken({ id: user._id.toString() })
       }
 
@@ -137,13 +138,13 @@ export class AuthService {
             path: "ruta"
          })
 
-      if(userDB.ruta.isLocked) {
+      if ((userDB.ruta as any).isLocked) {
          throw new UnauthorizedException("Ruta bloqueada")
       }
 
       return {
          user,
-         token: this.getJwtToken({ id: user._id })
+         token: this.getJwtToken({ id: user._id.toString() })
       }
 
    }
@@ -161,7 +162,7 @@ export class AuthService {
    }
 
    async findAll(user: User, have_empresa: boolean = true) {
-      if(!have_empresa){
+      if (!have_empresa) {
          return this.userModel.find({
             empresa: { $in: [null, undefined] }
          })
@@ -220,7 +221,7 @@ export class AuthService {
 
 
       if (!!updateUserDto.password) {
-         if(updateUserDto.password.length < 6) {
+         if (updateUserDto.password.length < 6) {
             throw new BadRequestException(`La contraseña tiene que tener minimo 6 caracteres`)
          }
          updateUserDto.password = bcrypt.hashSync(updateUserDto.password, 10);

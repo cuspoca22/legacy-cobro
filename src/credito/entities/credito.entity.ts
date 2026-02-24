@@ -13,7 +13,7 @@ export class Credito extends Document {
          ref: "Pago"
       }]
    })
-   pagos: Pago[] 
+   pagos: Pago[]
 
    @Prop({
       type: Boolean,
@@ -26,7 +26,7 @@ export class Credito extends Document {
       required: true
    })
    valor_credito: number;
-   
+
    @Prop({
       type: Number,
       required: true
@@ -49,13 +49,13 @@ export class Credito extends Document {
       type: Number,
       default: 0
    })
-   abonos: number; 
-   
+   abonos: number;
+
    @Prop({
       type: Number,
       required: true
    })
-   saldo: number; 
+   saldo: number;
 
    @Prop({
       type: Number,
@@ -72,14 +72,14 @@ export class Credito extends Document {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Cliente'
    })
-   cliente: Cliente;
+   cliente: Cliente | string;
 
    @Prop({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Ruta'
    })
-   ruta: Ruta; 
-   
+   ruta: Ruta | string;
+
    @Prop({
       type: String,
       default: ''
@@ -89,14 +89,14 @@ export class Credito extends Document {
    @Prop({
       type: String
    })
-   notas: string; 
+   notas: string;
 
    @Prop({
       type: Number,
       required: true
    })
    turno: number;
-   
+
    @Prop({
       type: String,
       enum: ["diario", "semanal", "mensual"]
@@ -109,7 +109,7 @@ export class Credito extends Document {
    })
    se_cobran_domingos: boolean;
 
-   @Prop({type: Number})
+   @Prop({ type: Number })
    atraso?: number;
 
    @Prop({

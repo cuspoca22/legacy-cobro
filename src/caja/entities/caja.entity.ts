@@ -4,7 +4,7 @@ import { Ruta } from '../../ruta/entities/ruta.entity';
 
 @Schema()
 export class Caja {
-   
+
 
    _id?: string;
 
@@ -49,8 +49,8 @@ export class Caja {
       required: true,
       default: 0
    })
-   cobro: number; 
-   
+   cobro: number;
+
    @Prop({
       type: Number,
       required: true,
@@ -64,7 +64,7 @@ export class Caja {
       default: 0
    })
    total_clientes: number;
-   
+
    @Prop({
       type: Number,
       required: true,
@@ -85,7 +85,7 @@ export class Caja {
       default: 0
    })
    caja_final: number;
-   
+
    @Prop({
       type: Number,
       required: true,
@@ -104,8 +104,8 @@ export class Caja {
       ref: 'Ruta',
       required: true
    })
-   ruta: Ruta; 
-   
+   ruta: Ruta | string;
+
 }
 
 export const CajaSchema = SchemaFactory.createForClass(Caja);

@@ -10,6 +10,8 @@ import { Credito } from '../credito/entities/credito.entity';
 import { Empresa } from 'src/empresa/entities/empresa.entity';
 import { MomentService } from '../common/plugins/moment/moment.service';
 import { ConfigService } from '@nestjs/config';
+import { Ruta } from '../ruta/entities/ruta.entity';
+import { Cliente } from '../cliente/entities/cliente.entity';
 
 export interface SendEmailOptions {
    to: string | string[];
@@ -43,17 +45,17 @@ export class ReportsService {
 
       private moment: MomentService,
       private configService: ConfigService,
-   ) {}
+   ) { }
 
    async sendEmail(options: SendEmailOptions): Promise<boolean> {
 
       const { to, subject, htmlBody, attachments } = options;
 
       try {
-         
+
          const sendInformation = await this.transporter.sendMail({
             to,
-            subject, 
+            subject,
             html: htmlBody,
             attachments
          })
@@ -68,7 +70,7 @@ export class ReportsService {
 
    }
 
-   async sendBackUpViaEmail(to: string | string[], file: Buffer, empresa: Empresa){
+   async sendBackUpViaEmail(to: string | string[], file: Buffer, empresa: Empresa) {
 
       const subject = `Copia de seguridad de ${empresa.name}`;
       const htmlBody = `
@@ -98,13 +100,13 @@ export class ReportsService {
             status: true,
             ruta: { $in: empresa.rutas }
          }).populate([
-            { path: 'cliente'},
+            { path: 'cliente' },
             { path: 'ruta' },
          ]);
 
          const path = await this.generarBackUp(empresa, creditos, to);
          return path;
-         
+
       } catch (error) {
 
          console.log(error)
@@ -122,28 +124,30 @@ export class ReportsService {
       const csvWrite = createCsvWriter({
          path,
          header: [
-            {id: 'ruta', title: 'RUTA'},
-            {id: 'cliente', title: 'CLIENTE'},
-            {id: 'telefono', title: 'TELEFONO'},
-            {id: 'direccion', title: 'DIRECCION'},
-            {id: 'valor_credito', title: 'PRESTADO'},
-            {id: 'total_cuotas', title: 'CUOTAS'},
-            {id: 'abonos', title: 'ABONOS'},
-            {id: 'saldo', title: 'SALDO'},
-            {id: 'valor_cuota', title: 'VALOR CUOTA'},
-            {id: 'fecha_inicio', title: 'INICIO'},
-            {id: 'ultimo_pago', title: 'FECHA ULTIMO PAGO'},
+            { id: 'ruta', title: 'RUTA' },
+            { id: 'cliente', title: 'CLIENTE' },
+            { id: 'telefono', title: 'TELEFONO' },
+            { id: 'direccion', title: 'DIRECCION' },
+            { id: 'valor_credito', title: 'PRESTADO' },
+            { id: 'total_cuotas', title: 'CUOTAS' },
+            { id: 'abonos', title: 'ABONOS' },
+            { id: 'saldo', title: 'SALDO' },
+            { id: 'valor_cuota', title: 'VALOR CUOTA' },
+            { id: 'fecha_inicio', title: 'INICIO' },
+            { id: 'ultimo_pago', title: 'FECHA ULTIMO PAGO' },
          ]
       })
 
       const records = [];
 
       for (const credito of creditos) {
+         const ruta = credito.ruta as Ruta;
+         const cliente = credito.cliente as Cliente;
          records.push({
-            ruta: credito.ruta.nombre,
-            cliente: credito.cliente.nombre,
-            telefono: credito.cliente.telefono,
-            direccion: `${credito.cliente.direccion} - ${credito.cliente.ciudad}`,
+            ruta: ruta.nombre,
+            cliente: cliente.nombre,
+            telefono: cliente.telefono,
+            direccion: `${cliente.direccion} - ${cliente.ciudad}`,
             valor_credito: credito.valor_credito,
             total_cuotas: credito.total_cuotas,
             abonos: credito.abonos,
@@ -158,15 +162,15 @@ export class ReportsService {
 
       const backup = join(__dirname, `../../static/backups/`, `${empresa._id}_${fecha}.csv`);
 
-      if(!fs.existsSync(backup)) {
+      if (!fs.existsSync(backup)) {
          throw new BadRequestException('No se pudo crear el backup')
       }
 
       const file = fs.readFileSync(backup);
-      
+
       let sentEmail = false;
 
-      if(to){
+      if (to) {
          sentEmail = await this.sendBackUpViaEmail(to, file, empresa)
       }
 
@@ -174,7 +178,7 @@ export class ReportsService {
          file: backup,
          sentEmail
       }
-   
+
    }
 
 }

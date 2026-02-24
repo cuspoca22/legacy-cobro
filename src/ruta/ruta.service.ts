@@ -58,7 +58,7 @@ export class RutaService {
     private readonly cajaService: CajaService,
 
     private moment: MomentService
-  ) {}
+  ) { }
 
   async create(createRutaDto: CreateRutaDto) {
 
@@ -127,10 +127,10 @@ export class RutaService {
   async closeRuta(id: string, fecha?: string): Promise<boolean> {
 
     const ruta = await this.findOne(id);
-    
+
     const date = getFormattedDate(ruta.pais);
 
-    if(!ruta.status) {
+    if (!ruta.status) {
       throw new BadRequestException(`La ruta ya fue cerrada el dia ${date}`)
     }
 
@@ -138,10 +138,10 @@ export class RutaService {
     await this.update(id, {
       status: false,
       ultimo_cierre: date,
-      ultima_caja: ruta.caja_actual._id
+      ultima_caja: (ruta.caja_actual as Caja)._id
     })
 
-    await this.cajaService.actualizarCaja(ruta.caja_actual._id)
+    await this.cajaService.actualizarCaja((ruta.caja_actual as Caja)._id)
     await this.actualizarRuta(id);
 
     this.socketRuta.wss.emit('close-caja', { ruta: id });
@@ -153,15 +153,15 @@ export class RutaService {
   async openRuta(id: string): Promise<boolean> {
 
     const ruta: Ruta = await this.findOne(id);
-    
+
     const fecha = getFormattedDate(ruta.pais);
 
-    if(ruta.status) {
+    if (ruta.status) {
       throw new BadRequestException(`La ruta ya fue abierta el dia ${fecha}`)
     }
 
-    const caja = ruta.ultima_caja 
-      ? await this.createCajaWithUltimaCaja(ruta, fecha) 
+    const caja = ruta.ultima_caja
+      ? await this.createCajaWithUltimaCaja(ruta, fecha)
       : await this.createCajaInicial(id, fecha);
 
     await ruta.updateOne({
@@ -190,9 +190,9 @@ export class RutaService {
     const pretendido = creditosDeLaRuta.reduce((sum, credito) => sum + credito.valor_cuota, 0);
 
     return this.cajaModel.create({
-      base: ruta.ultima_caja.caja_final,
-      caja_final: ruta.caja_actual.caja_final,
-      ruta: ruta._id,
+      base: (ruta.ultima_caja as Caja).caja_final,
+      caja_final: (ruta.caja_actual as Caja).caja_final,
+      ruta: ruta._id as any,
       total_clientes: creditosDeLaRuta.length,
       clientes_pendientes: creditosDeLaRuta.length,
       pretendido,
@@ -259,30 +259,30 @@ export class RutaService {
 
   }
 
-   //Esta funcion busca las rutas abiertas y las cierra
-   public checkRutas = async () => {
-    
-    await this.processRuta({status: true}, this.closeRuta.bind(this))
+  //Esta funcion busca las rutas abiertas y las cierra
+  public checkRutas = async () => {
+
+    await this.processRuta({ status: true }, this.closeRuta.bind(this))
 
   }
 
   //Esta funcion se encarga de abrir las rutas
   public checkOpenRutas = async () => {
-    
-    await this.processRuta({autoOpen: true, status: false}, this.openRuta.bind(this))
+
+    await this.processRuta({ autoOpen: true, status: false }, this.openRuta.bind(this))
 
   }
 
   public async processRuta(
     filter: Record<string, any>,
     action: (rutaId: string) => Promise<void>
-  ): Promise<void>  {
+  ): Promise<void> {
     const rutas = await this.rutaModel.find(filter);
-    
+
     await Promise.all(
-      rutas.map( async (ruta) => {
+      rutas.map(async (ruta) => {
         try {
-          await action(ruta._id);
+          await action(ruta._id as any);
         } catch (error) {
           console.log(error)
           this.handleExceptions(error)

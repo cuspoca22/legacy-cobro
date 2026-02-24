@@ -14,7 +14,7 @@ export class PruebasService {
     private readonly creditoModel: Model<Credito>,
 
     private readonly rutaSvc: RutaService
-  ){}
+  ) { }
 
   create(createPruebaDto: CreatePruebaDto) {
     return 'This action adds a new prueba';
@@ -27,7 +27,7 @@ export class PruebasService {
     })
       .select('-pagos')
       .populate([
-        { path: 'ruta', select: 'nombre'}
+        { path: 'ruta', select: 'nombre' }
       ])
 
 
@@ -38,7 +38,7 @@ export class PruebasService {
 
     creditos.forEach(credito => {
       cartera += credito.saldo;
-      nombre = credito.ruta.nombre
+      nombre = (credito.ruta as any).nombre
     })
 
     return {

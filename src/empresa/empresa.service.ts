@@ -34,7 +34,7 @@ export class EmpresaService {
       start: true,
       timeZone: 'America/sao_paulo'
     });
-        
+
     const openRutas = CronJob.from({
       cronTime: '00 00 9 * * 1-6',
       onTick: this.rutaSvc.checkOpenRutas,
@@ -58,7 +58,7 @@ export class EmpresaService {
     }
 
   }
-  
+
   async getEmpresaById(id: string) {
 
     try {
@@ -66,11 +66,11 @@ export class EmpresaService {
       const empresa = await this.empresaModel.findById(id)
         .populate('employes')
         .populate('rutas');
-    
+
       return empresa;
 
     } catch (error) {
-      
+
       this.handleExceptions(error);
 
     }
@@ -135,8 +135,8 @@ export class EmpresaService {
         }
       ])
 
-    empresaDB = empresaDB.toObject();
-    return empresaDB.employes;
+    const empresaPlain = empresaDB.toObject();
+    return empresaPlain.employes;
 
   }
 
@@ -147,12 +147,12 @@ export class EmpresaService {
   }
 
   async findRutasByEmpresa(idEmpresa: string) {
-    
+
     const empresa = await this.empresaModel.findById(idEmpresa)
       .populate('rutas');
 
     return empresa.rutas;
-    
+
   }
 
   async findOne(id: string) {
@@ -203,21 +203,21 @@ export class EmpresaService {
       const empresa = await this.empresaModel.findById(userDto.empresa).populate('employes');
       const empleado = await this.authSvc.create(userDto);
 
-      const existeEmpleado = empresa.employes.some(e => e._id.equals(empleado._id));
+      const existeEmpleado = empresa.employes.some(e => (e as any)._id.equals(empleado._id));
 
       if (!existeEmpleado) {
 
         empresa.employes.push(empleado);
         await empresa.save();
 
-        empleado.empresa = empresa._id;
+        empleado.empresa = empresa._id.toString();
         await empleado.save();
 
       } else {
         throw new BadRequestException('El empleado ya esta en esta empresa')
       }
 
-    }catch (error) {
+    } catch (error) {
 
       this.handleExceptions(error)
 
@@ -234,7 +234,7 @@ export class EmpresaService {
     if (!empresa) throw new NotFoundException('No existe la empresa');
 
     try {
-      empresa.employes = empresa.employes.filter(empId => !empId.equals(user._id));
+      empresa.employes = empresa.employes.filter(empId => !(empId as any).equals(user._id));
       await empresa.save();
       await this.userModel.findByIdAndDelete(empleado);
     } catch (error) {
@@ -250,20 +250,20 @@ export class EmpresaService {
 
     const empresa = await this.empresaModel.findById(idEmpresa).populate('rutas');
     // const ruta = await this.rutaSvc.findOne(idRuta);
-    
+
     if (!empresa) {
       throw new NotFoundException('La empresa no existe');
     }
 
     const ruta = await this.rutaSvc.create(rutaDto);
 
-    const existeRuta = empresa.rutas.some(r => r._id.equals(ruta._id));
+    const existeRuta = empresa.rutas.some(r => (r as any)._id.equals(ruta._id));
 
     if (!existeRuta) {
       try {
         empresa.rutas.push(ruta);
         await empresa.save();
-        ruta.empresa = empresa._id;
+        ruta.empresa = empresa._id.toString();
         await ruta.save()
       } catch (error) {
         console.error('Error al guardar en la base de datos:', error);
@@ -286,8 +286,8 @@ export class EmpresaService {
 
     try {
 
-      empresa.owner = owner._id;
-      owner.empresa = empresa._id;
+      empresa.owner = owner._id as any;
+      owner.empresa = empresa._id as any;
       await empresa.save();
       await owner.save();
       return true;
@@ -314,7 +314,7 @@ export class EmpresaService {
 
   }
 
-  async openOrCloseRuta(idEmpresa: string, idRuta: string, action: string){
+  async openOrCloseRuta(idEmpresa: string, idRuta: string, action: string) {
 
     const empresa = await this.empresaModel.findById(idEmpresa)
       .select('rutas')
@@ -323,16 +323,16 @@ export class EmpresaService {
         select: '_id'
       })
 
-    const { _id: ruta} = empresa.rutas.find(ruta => ruta._id.toString() === idRuta);
+    const { _id: ruta } = empresa.rutas.find(ruta => ruta._id.toString() === idRuta);
 
     const validAction = ['CLOSE', 'OPEN'];
 
     const actionHandlers = {
-      CLOSE: () => this.rutaSvc.closeRuta(ruta),
-      OPEN: () => this.rutaSvc.openRuta(ruta)
+      CLOSE: () => this.rutaSvc.closeRuta(ruta.toString()),
+      OPEN: () => this.rutaSvc.openRuta(ruta.toString())
     }
 
-    if(!validAction.includes(action)){
+    if (!validAction.includes(action)) {
       throw new BadRequestException('Ingrese una accion valida');
     }
 

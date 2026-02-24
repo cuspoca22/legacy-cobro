@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import mongoose, {Document} from "mongoose";
+import mongoose, { Document } from "mongoose";
 
 import { Ruta } from "src/ruta/entities/ruta.entity";
 import { Empresa } from "src/empresa/entities/empresa.entity";
 
 @Schema()
 export class User extends Document {
-   
+
    @Prop({
       type: String,
       index: true,
@@ -45,12 +45,12 @@ export class User extends Document {
       default: 'COBRADOR'
    })
    rol: string;
-   
+
    @Prop({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Ruta"
    })
-   ruta: Ruta;
+   ruta: Ruta | string;
 
    @Prop({
       type: [{
@@ -58,13 +58,13 @@ export class User extends Document {
          ref: "Ruta"
       }]
    })
-   rutas: Ruta[];
+   rutas: (Ruta | string)[];
 
    @Prop({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Empresa"
    })
-   empresa: Empresa;
+   empresa: Empresa | string;
 
    @Prop({ type: Boolean })
    close_ruta: boolean;

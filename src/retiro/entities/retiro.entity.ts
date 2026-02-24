@@ -9,26 +9,26 @@ export class Retiro {
       type: String,
       required: true
    })
-   fecha: string; 
+   fecha: string;
 
    @Prop({
       type: Number,
       required: true
    })
-   valor: number; 
+   valor: number;
 
    @Prop({
       type: String,
       uppercase: true,
       trim: true
    })
-   nota: string; 
+   nota: string;
 
    @Prop({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'RutaModel'
    })
-   ruta: Ruta; 
+   ruta: Ruta | string;
 
 }
 

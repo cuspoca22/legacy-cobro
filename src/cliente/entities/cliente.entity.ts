@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
 import { Ruta } from '../../ruta/entities/ruta.entity';
-import mongoose, {Document} from "mongoose";
+import mongoose, { Document } from "mongoose";
 import { Credito } from "src/credito/entities/credito.entity";
 
 @Schema()
@@ -9,14 +9,14 @@ export class Cliente extends Document {
       type: Boolean,
       default: false
    })
-   status: boolean; 
+   status: boolean;
 
    @Prop({
       type: Boolean,
       default: true
    })
-   state: boolean; 
-   
+   state: boolean;
+
    @Prop({
       type: String,
       required: true,
@@ -41,7 +41,7 @@ export class Cliente extends Document {
       trim: true,
       index: true
    })
-   alias: string; 
+   alias: string;
 
    @Prop({
       type: String,
@@ -70,18 +70,18 @@ export class Cliente extends Document {
       trim: true
    })
    telefono: string;
-   
+
    @Prop({
       type: String,
       trim: true
    })
    img: string;
-   
+
    @Prop({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Ruta'
    })
-   ruta: Ruta 
+   ruta: Ruta | string
 
    @Prop({
       type: [{

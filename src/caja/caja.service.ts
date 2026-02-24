@@ -79,8 +79,8 @@ export class CajaService {
 
     const newFecha = this.moment.fecha(fecha, 'DD/MM/YYYY');
 
-    const caja = await this.cajaModel.findOne({fecha: newFecha, ruta}).populate('ruta')
-    if(!caja) {
+    const caja = await this.cajaModel.findOne({ fecha: newFecha, ruta }).populate('ruta')
+    if (!caja) {
       throw new NotFoundException('Olvido cerrar la ruta, hable con el administrador del sistema')
     }
 
@@ -130,8 +130,8 @@ export class CajaService {
 
     // Estos dos bloques manejan el extra del dia, el extra del dia se compone de pagosextra y creditos a los cuales le abonaron en el mismo dia.
     const extraPorPagos = pagosOfDay
-      .filter(({ valor, credito }) => valor > credito.valor_cuota)
-      .reduce((totalExtra, { valor, credito }) => totalExtra + (valor - credito.valor_cuota), 0);
+      .filter(({ valor, credito }) => valor > (credito as Credito).valor_cuota)
+      .reduce((totalExtra, { valor, credito }) => totalExtra + (valor - (credito as Credito).valor_cuota), 0);
 
     const extraPorCreditosRenovados = renovaciones
       .filter(credito => credito.pagos.length > 0)
@@ -162,7 +162,7 @@ export class CajaService {
 
     // TENIAN QUE PAGAR
     let tenianQuePagar = pagosOfDay
-      .filter(pago => pago.credito.fecha_inicio !== fechaPropia);
+      .filter(pago => (pago.credito as Credito).fecha_inicio !== fechaPropia);
 
     // caja.base = caja.ruta.ultima_caja.caja_final;
     caja.inversion = inversion;
@@ -171,9 +171,9 @@ export class CajaService {
     caja.cobro = cobro;
     caja.prestamo = prestamo;
     caja.total_clientes = totalClientes,
-    caja.clientes_pendientes = (totalClientes - numeroDeRenovaciones) - tenianQuePagar.length
+      caja.clientes_pendientes = (totalClientes - numeroDeRenovaciones) - tenianQuePagar.length
     caja.renovaciones = numeroDeRenovaciones,
-    caja.extra = extra;
+      caja.extra = extra;
     caja.caja_final = (caja.base + inversion + cobro) - (retiro + gasto + prestamo)
 
     await caja.save()
@@ -195,7 +195,7 @@ export class CajaService {
 
     if (!idCaja) {
       const ruta = await this.rutaSvc.findOne(idRuta);
-      id = ruta.caja_actual._id;
+      id = (ruta.caja_actual as any)._id;
     }
 
     const caja = await this.cajaModel.findById(id)
@@ -242,8 +242,9 @@ export class CajaService {
 
     // primero verificar que pagos se han echo por encima de su valor de cutoa;
     pagosDelDiaDeHoy.forEach(pago => {
-      if (pago.valor > pago.credito.valor_cuota) {
-        extra += pago.valor - pago.credito.valor_cuota
+      const credito = pago.credito as Credito;
+      if (pago.valor > credito.valor_cuota) {
+        extra += pago.valor - credito.valor_cuota
       }
     })
 
@@ -314,11 +315,11 @@ export class CajaService {
 
       await this.CcModel.create({
         user: user._id,
-        caja: idCaja,
+        caja: idCaja as any,
         saldo: caja.caja_final,
         date: fecha.toLocaleDateString('es'),
-        ruta: caja.ruta._id
-      })
+        ruta: (caja.ruta as any)._id as any
+      } as any)
 
       return true;
 

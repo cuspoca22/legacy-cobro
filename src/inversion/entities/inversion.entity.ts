@@ -8,24 +8,24 @@ export class Inversion {
    @Prop({
       type: String
    })
-   fecha: string; 
+   fecha: string;
 
    @Prop({
       type: Number
    })
-   valor: number; 
+   valor: number;
 
    @Prop({
       type: String,
       uppercase: true
    })
-   nota: string; 
-   
+   nota: string;
+
    @Prop({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Ruta'
    })
-   ruta: Ruta 
+   ruta: Ruta | string
 }
 
 export const InversionSchema = SchemaFactory.createForClass(Inversion)

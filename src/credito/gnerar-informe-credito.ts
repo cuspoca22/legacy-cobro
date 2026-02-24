@@ -1,6 +1,7 @@
 import { Credito } from './entities/credito.entity';
 import { Pago } from '../pago/entities/pago.entity';
 import { addDays, differenceInDays, getDay } from 'date-fns';
+import { Cliente } from '../cliente/entities/cliente.entity';
 export class InformeCredito {
 
    private credito: Credito;
@@ -74,6 +75,7 @@ export class InformeCredito {
 
    async getMessage(): Promise<{ message: string; urlMessage: string }> {
 
+      const cliente = this.credito.cliente as Cliente;
       let cuotasPendientes = this.credito.saldo / this.credito.valor_cuota;
       let aplicandoFixed = cuotasPendientes.toFixed(2);
 
@@ -81,7 +83,7 @@ export class InformeCredito {
 
       let txtEncoded: string = `
          Fecha+Inicio%3a+${this.credito.fecha_inicio.replaceAll(" ", "+")}%0d%0a
-         Cliente%3a+${this.credito.cliente.alias.replaceAll(" ", "+")}%0d%0a
+         Cliente%3a+${cliente.alias.replaceAll(" ", "+")}%0d%0a
          Abonos%3a+$${this.credito.abonos}.00%0d%0a
          Saldo%3a+$${this.credito.saldo}.00%0d%0a
          Atrasos%3a+${await this.calcularAtrasos()}%0d%0a
@@ -93,7 +95,7 @@ export class InformeCredito {
 
       let txtMessage: string = `
          Fecha: ${this.credito.fecha_inicio} 
-         Cliente: ${this.credito.cliente.alias} 
+         Cliente: ${cliente.alias} 
          Abonos: $${this.credito.abonos}.00 
          Saldo: $${this.credito.saldo}.00 
          Atrasos: ${await this.calcularAtrasos()} 
@@ -104,7 +106,7 @@ export class InformeCredito {
       `
 
       return {
-         urlMessage: `https://wa.me/${this.credito.cliente.telefono}?text=${txtEncoded}`,
+         urlMessage: `https://wa.me/${cliente.telefono}?text=${txtEncoded}`,
          message: txtMessage
       }
 

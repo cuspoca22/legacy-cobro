@@ -11,33 +11,33 @@ export class Gasto {
       ref: 'ListGasto',
       required: true
    })
-   gasto: ListGasto;
+   gasto: ListGasto | string;
 
    @Prop({
       type: Date,
       default: Date.now,
       required: true
    })
-   fecha: Date; 
-   
+   fecha: Date;
+
    @Prop({
       type: Number,
       required: true
    })
-   valor: number; 
+   valor: number;
 
    @Prop({
       type: String,
       uppercase: true,
       trim: true
    })
-   nota: string; 
+   nota: string;
 
    @Prop({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Ruta'
    })
-   ruta: Ruta; 
+   ruta: Ruta | string;
 }
 
 export const GastoSchema = SchemaFactory.createForClass(Gasto)
