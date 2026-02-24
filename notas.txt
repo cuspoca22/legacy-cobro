@@ -1,0 +1,3 @@
+formas de abrir la ruta
+1. Manual es decir el administrador abre la ruta
+2. Se espera que el sistema lo abra automaticamente
