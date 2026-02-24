@@ -1,6 +1,9 @@
 {
   "name": "api-cobrador",
   "version": "0.0.1",
+  "engines": {
+    "node": "22.19.5"
+  },
   "description": "",
   "author": "",
   "private": true,
