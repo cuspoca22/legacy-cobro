@@ -41,7 +41,7 @@ export class EmpresaController {
 
     let { empresa } = user;
     empresa = empresa.toString();
-
+    console.log(empresa, user);
     return this.empresaService.findRutasByEmpresa(empresa);
 
   }

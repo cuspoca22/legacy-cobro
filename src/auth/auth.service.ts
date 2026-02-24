@@ -105,18 +105,18 @@ export class AuthService {
             throw new UnauthorizedException("Ruta cerrada hable con su administrador")
          }
 
-         if (ruta.isLocked) {
+         // if (ruta.isLocked) {
 
-            await this.logAuth.create({
-               user: user._id,
-               ipAddress: request.ip,
-               userAgent: request.headers['user-agent'],
-               reason: 'Ruta bloqueada',
-               isSuccessful: false
-            })
+         //    await this.logAuth.create({
+         //       user: user._id,
+         //       ipAddress: request.ip,
+         //       userAgent: request.headers['user-agent'],
+         //       reason: 'Ruta bloqueada',
+         //       isSuccessful: false
+         //    })
 
-            throw new UnauthorizedException('Su ruta se encuentra bloqueada, por favor ponganse en contacto con su supervisor')
-         }
+         //    throw new UnauthorizedException('Su ruta se encuentra bloqueada, por favor ponganse en contacto con su supervisor')
+         // }
       }
 
       const userPlain = user.toObject();
@@ -138,9 +138,9 @@ export class AuthService {
             path: "ruta"
          })
 
-      if ((userDB.ruta as any).isLocked) {
-         throw new UnauthorizedException("Ruta bloqueada")
-      }
+      // if ((userDB.ruta as any).isLocked) {
+      //    throw new UnauthorizedException("Ruta bloqueada")
+      // }
 
       return {
          user,

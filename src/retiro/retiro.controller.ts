@@ -8,7 +8,7 @@ import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe';
 @Auth()
 @Controller('retiro')
 export class RetiroController {
-  constructor(private readonly retiroService: RetiroService) {}
+  constructor(private readonly retiroService: RetiroService) { }
 
   @Post()
   async create(
