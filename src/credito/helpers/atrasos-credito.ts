@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import moment from 'moment';
 import { Credito } from "../entities/credito.entity";
 import { Pago } from 'src/pago/entities/pago.entity';
 import { Cliente } from 'src/cliente/entities/cliente.entity';

@@ -1,5 +1,5 @@
 import { ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments } from 'class-validator';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @ValidatorConstraint({ name: 'isDateString', async: false })
 export class IsDateStringConstraint implements ValidatorConstraintInterface {

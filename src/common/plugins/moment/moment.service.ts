@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 
-export type FormatDate = 'DD/MM/YYYY'|'YYYY/MM/DD'|'YYYY, MM, DD'|'YYYY-MM-DD'|'YYYY/MM/DD HH:mm a'
+export type FormatDate = 'DD/MM/YYYY' | 'YYYY/MM/DD' | 'YYYY, MM, DD' | 'YYYY-MM-DD' | 'YYYY/MM/DD HH:mm a'
 
 @Injectable()
 export class MomentService {
@@ -9,11 +9,11 @@ export class MomentService {
       moment.tz.setDefault('America/El_salvador');
    }
 
-   now(): string{
+   now(): string {
       return moment().utc(true).toISOString();
    }
 
-   nowWithFormat(format: FormatDate){
+   nowWithFormat(format: FormatDate) {
       return moment(this.now()).format(format);
    }
 
@@ -21,11 +21,11 @@ export class MomentService {
       return moment(date).format(format);
    }
 
-   fechaIsoString(date: string){
+   fechaIsoString(date: string) {
       return moment(date).utc().toISOString();
    }
 
    date(): Date {
-      return new Date(moment().utc(true).toISOString());      
+      return new Date(moment().utc(true).toISOString());
    }
 }
