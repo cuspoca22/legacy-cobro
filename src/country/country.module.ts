@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { CountryService } from './country.service';
 import { CountryController } from './country.controller';
 import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Citie, CitieSchema, Countrie, CountrieSchema, State, StateSchema, } from './entities';
 
@@ -29,4 +29,4 @@ import { Citie, CitieSchema, Countrie, CountrieSchema, State, StateSchema, } fro
   providers: [CountryService],
   exports: [CountryService, MongooseModule]
 })
-export class CountryModule {}
+export class CountryModule { }

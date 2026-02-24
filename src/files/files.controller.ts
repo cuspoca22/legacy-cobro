@@ -6,21 +6,21 @@ import { Response } from 'express';
 import { fileFilter, fileNamer } from './helpers';
 import { diskStorage } from 'multer';
 import { DynamicDestinationInterceptor } from '../common/interceptors/dynamic-destination.interceptor';
-import { Auth } from 'src/auth/decorators';
+import { Auth } from '../auth/decorators';
 
 @Controller('files')
 export class FilesController {
   constructor(
     private readonly filesService: FilesService,
     private configService: ConfigService,
-  ) {}
+  ) { }
 
   @Get(':collection/:imageName')
   findProductImage(
     @Res() res: Response,
     @Param('imageName') imageName: string,
     @Param('collection') collection: string
-  ){
+  ) {
     const path = this.filesService.getStaticProductsImage(imageName, collection);
     res.sendFile(path)
   }
@@ -29,7 +29,7 @@ export class FilesController {
   @Post(':collection')
   @UseInterceptors(
     DynamicDestinationInterceptor,
-    FileInterceptor('file',{
+    FileInterceptor('file', {
       fileFilter: fileFilter,
       storage: diskStorage({
         destination: (req, file, cb) => {
@@ -45,9 +45,9 @@ export class FilesController {
     file: Express.Multer.File,
 
     @Param('collection') collection: string
-  ){
+  ) {
 
-    if(!file){
+    if (!file) {
       throw new BadRequestException('Por favor seleccion un archivo validos')
     }
 

@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { Document } from "mongoose";
 
-import { Ruta } from "src/ruta/entities/ruta.entity";
-import { Empresa } from "src/empresa/entities/empresa.entity";
+import { Ruta } from "../../ruta/entities/ruta.entity";
+import { Empresa } from "../../empresa/entities/empresa.entity";
 
 @Schema()
 export class User extends Document {

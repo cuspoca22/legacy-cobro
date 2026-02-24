@@ -2,14 +2,14 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { GastoService } from './gasto.service';
 import { CreateGastoDto } from './dto/create-gasto.dto';
 import { UpdateGastoDto } from './dto/update-gasto.dto';
-import { Auth } from 'src/auth/decorators';
-import { GlobalParams } from 'src/common/dto/global-params.dto';
-import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe';
+import { Auth } from '../auth/decorators';
+import { GlobalParams } from '../common/dto/global-params.dto';
+import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
 
 @Auth()
 @Controller('gasto')
 export class GastoController {
-  constructor(private readonly gastoService: GastoService) {}
+  constructor(private readonly gastoService: GastoService) { }
 
   @Post()
   async create(
@@ -39,7 +39,7 @@ export class GastoController {
 
   @Patch(':id')
   update(
-    @Param('id', ParseMongoIdPipe) id: string, 
+    @Param('id', ParseMongoIdPipe) id: string,
     @Body() updateGastoDto: UpdateGastoDto
   ) {
     return this.gastoService.update(id, updateGastoDto);

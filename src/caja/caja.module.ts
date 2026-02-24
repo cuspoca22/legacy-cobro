@@ -10,9 +10,9 @@ import { Retiro, RetiroSchema } from '../retiro/entities/retiro.entity';
 import { Credito, CreditoSchema } from '../credito/entities/credito.entity';
 import { Cliente, ClienteSchema } from '../cliente/entities/cliente.entity';
 import { Pago, PagoSchema } from '../pago/entities/pago.entity';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 import { CierreCaja, CierreCajaSchema } from './entities/cierre_caja.entity';
-import { RutaModule } from 'src/ruta/ruta.module';
+import { RutaModule } from '../ruta/ruta.module';
 import { MomentService } from '../common/plugins/moment/moment.service';
 
 @Module({
@@ -59,4 +59,4 @@ import { MomentService } from '../common/plugins/moment/moment.service';
   providers: [CajaService, MomentService],
   exports: [CajaService, MongooseModule]
 })
-export class CajaModule {}
+export class CajaModule { }

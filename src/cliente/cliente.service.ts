@@ -5,8 +5,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Cliente } from './entities/cliente.entity';
 import { Model } from 'mongoose';
 import { GlobalParams } from '../common/dto/global-params.dto';
-import { isTrue } from 'src/common/helpers/isTrue';
-import { Credito } from 'src/credito/entities/credito.entity';
+import { isTrue } from '../common/helpers/isTrue';
+import { Credito } from '../credito/entities/credito.entity';
 import { addDate } from './helpers/orderCreditsByDate';
 
 @Injectable()

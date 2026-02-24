@@ -17,7 +17,7 @@ import { Caja } from '../caja/entities/caja.entity';
 import { CajaService } from '../caja/caja.service';
 import { LogRuta } from './entities/log-ruta';
 import { MomentService } from '../common/plugins/moment/moment.service';
-import { MessageGateway } from 'src/message/message.gateway';
+import { MessageGateway } from '../message/message.gateway';
 
 @Injectable()
 export class RutaService {

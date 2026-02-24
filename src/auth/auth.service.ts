@@ -10,8 +10,8 @@ import { LoginResponse } from './interfaces/login-response.interface';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { RutaService } from '../ruta/ruta.service';
 import { CierreCaja } from '../caja/entities/cierre_caja.entity';
-import { LogAuth } from 'src/log-auth/entities/log-auth.entity';
-import { MomentService } from 'src/common/plugins/moment/moment.service';
+import { LogAuth } from '../log-auth/entities/log-auth.entity';
+import { MomentService } from '../common/plugins/moment/moment.service';
 import { Request } from 'express';
 import { MessageGateway } from '../message/message.gateway';
 

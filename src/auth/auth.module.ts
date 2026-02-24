@@ -11,7 +11,7 @@ import { JWTStrategy } from './strategies/jwt.strategy';
 import { RutaModule } from '../ruta/ruta.module';
 import { CierreCaja, CierreCajaSchema } from '../caja/entities/cierre_caja.entity';
 import { LogAuth, LogAuthSchema } from '../log-auth/entities/log-auth.entity';
-import { MomentService } from 'src/common/plugins/moment/moment.service';
+import { MomentService } from '../common/plugins/moment/moment.service';
 
 @Module({
   imports: [
@@ -51,4 +51,4 @@ import { MomentService } from 'src/common/plugins/moment/moment.service';
   providers: [AuthService, JWTStrategy, MomentService],
   exports: [MongooseModule, AuthService, JWTStrategy, PassportModule, JwtModule]
 })
-export class AuthModule {}
+export class AuthModule { }

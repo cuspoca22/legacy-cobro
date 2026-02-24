@@ -2,14 +2,14 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { PagoService } from './pago.service';
 import { CreatePagoDto } from './dto/create-pago.dto';
 import { UpdatePagoDto } from './dto/update-pago.dto';
-import { Auth } from 'src/auth/decorators';
-import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe';
+import { Auth } from '../auth/decorators';
+import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
 import { GlobalParams } from '../common/dto/global-params.dto';
 
 @Auth()
 @Controller('pago')
 export class PagoController {
-  constructor(private readonly pagoService: PagoService) {}
+  constructor(private readonly pagoService: PagoService) { }
 
   @Post()
   async create(
@@ -34,7 +34,7 @@ export class PagoController {
 
   @Patch(':id')
   async update(
-    @Param('id', ParseMongoIdPipe) id: string, 
+    @Param('id', ParseMongoIdPipe) id: string,
     @Body() updatePagoDto: UpdatePagoDto
   ) {
     return this.pagoService.update(id, updatePagoDto);

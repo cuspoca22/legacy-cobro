@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, {Document} from "mongoose";
+import mongoose, { Document } from "mongoose";
 import { User } from '../../auth/entities/user.entity';
-import { Ruta } from 'src/ruta/entities/ruta.entity';
+import { Ruta } from './ruta.entity';
 const moment = require('moment-timezone');
 moment.tz.setDefault("America/Guatemala");
 
@@ -25,8 +25,8 @@ export class LogRuta extends Document {
       ref: 'Ruta'
    })
    ruta: Ruta;
-  
-  
+
+
 }
 
 export const LogRutaSchema = SchemaFactory.createForClass(LogRuta);

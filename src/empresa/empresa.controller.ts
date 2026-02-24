@@ -2,16 +2,16 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { EmpresaService } from './empresa.service';
 import { CreateEmpresaDto } from './dto/create-empresa.dto';
 import { UpdateEmpresaDto } from './dto/update-empresa.dto';
-import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe';
-import { Auth, GetUser } from 'src/auth/decorators';
-import { ValidRoles } from 'src/auth/interfaces';
-import { CreateUserDto } from 'src/auth/dto';
+import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
+import { Auth, GetUser } from '../auth/decorators';
+import { ValidRoles } from '../auth/interfaces';
+import { CreateUserDto } from '../auth/dto';
 import { ToUpperCasePipe } from '../common/pipes/to-upper-case.pipe';
 import { CreateRutaDto } from '../ruta/dto/create-ruta.dto';
 
 @Controller('empresa')
 export class EmpresaController {
-  constructor(private readonly empresaService: EmpresaService) {}
+  constructor(private readonly empresaService: EmpresaService) { }
 
   @Auth()
   @Post()
@@ -29,7 +29,7 @@ export class EmpresaController {
   }
 
   @Get('get-open-rutas')
-  findEmpresaWithRutasOpened(){
+  findEmpresaWithRutasOpened() {
     return this.empresaService.findEmpresaWithRutasOpened()
   }
 
@@ -38,7 +38,7 @@ export class EmpresaController {
   findOne(
     @GetUser() user: any,
   ) {
-    
+
     let { empresa } = user;
     empresa = empresa.toString();
 
@@ -48,7 +48,7 @@ export class EmpresaController {
 
   @Auth()
   @Get('all')
-  findAllEmpresas(){
+  findAllEmpresas() {
     return this.empresaService.getAllEmpresas();
   }
 
@@ -56,9 +56,9 @@ export class EmpresaController {
   @Get(':id')
   findById(
     @GetUser() user: any,
-    @Param('id', ParseMongoIdPipe) id: string, 
+    @Param('id', ParseMongoIdPipe) id: string,
   ) {
-    
+
     let { empresa } = user;
     empresa = empresa.toString();
 
@@ -69,7 +69,7 @@ export class EmpresaController {
   @Auth()
   @Patch('update/:id')
   update(
-    @Param('id', ParseMongoIdPipe) id: string, 
+    @Param('id', ParseMongoIdPipe) id: string,
     @Body() updateEmpresaDto: UpdateEmpresaDto
   ) {
     return this.empresaService.update(id, updateEmpresaDto);
@@ -79,7 +79,7 @@ export class EmpresaController {
   @Post('add-empleado')
   addEmploye(
     @Body() userDto: CreateUserDto,
-  ){
+  ) {
     return this.empresaService.addEmploye(userDto);
   }
 
@@ -88,7 +88,7 @@ export class EmpresaController {
   removeEmploye(
     @Query('empresa', ParseMongoIdPipe) empresa: string,
     @Query('empleado', ParseMongoIdPipe) empleado: string
-  ){
+  ) {
     return this.empresaService.deleteEmpleado(empresa, empleado);
   }
 
@@ -123,7 +123,7 @@ export class EmpresaController {
     @Param('idEmpresa', ParseMongoIdPipe) idEmpresa: string,
     @Param('idRuta', ParseMongoIdPipe) idRuta: string,
     @Query('action', ToUpperCasePipe) action: string,
-  ){
+  ) {
     return this.empresaService.openOrCloseRuta(idEmpresa, idRuta, action)
   }
 }

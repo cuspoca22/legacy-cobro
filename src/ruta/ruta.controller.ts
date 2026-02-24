@@ -2,8 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { RutaService } from './ruta.service';
 import { CreateRutaDto } from './dto/create-ruta.dto';
 import { UpdateRutaDto } from './dto/update-ruta.dto';
-import { Auth, GetUser } from 'src/auth/decorators';
-import { ValidRoles } from 'src/auth/interfaces';
+import { Auth, GetUser } from '../auth/decorators';
+import { ValidRoles } from '../auth/interfaces';
 import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
 import { User } from '../auth/entities/user.entity';
 import { GlobalParams } from '../common/dto/global-params.dto';
@@ -23,7 +23,7 @@ import { GlobalParams } from '../common/dto/global-params.dto';
 @Auth()
 @Controller('ruta')
 export class RutaController {
-  constructor(private readonly rutaService: RutaService) {}
+  constructor(private readonly rutaService: RutaService) { }
 
   @Auth(ValidRoles.admin, ValidRoles.superAdmin)
   @Post()
@@ -51,7 +51,7 @@ export class RutaController {
 
   @Patch(':id')
   async update(
-    @Param('id', ParseMongoIdPipe) id: string, 
+    @Param('id', ParseMongoIdPipe) id: string,
     @Body() updateRutaDto: UpdateRutaDto
   ) {
     return this.rutaService.update(id, updateRutaDto);
@@ -68,7 +68,7 @@ export class RutaController {
   @Patch("open/:id")
   async openRuta(
     @Param("id", ParseMongoIdPipe) id: string,
-    @Query('fecha') fecha: string 
+    @Query('fecha') fecha: string
   ) {
     return this.rutaService.openRuta(id)
   }
@@ -76,7 +76,7 @@ export class RutaController {
   @Patch("close/:id")
   async closeRuta(
     @Param("id", ParseMongoIdPipe) id: string,
-    @Query('fecha') fecha: string 
+    @Query('fecha') fecha: string
   ) {
     return this.rutaService.closeRuta(id, fecha)
   }

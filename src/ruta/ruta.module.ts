@@ -4,7 +4,7 @@ import { RutaController } from './ruta.controller';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Ruta, RutaSchema } from './entities/ruta.entity';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 import { Credito, CreditoSchema } from '../credito/entities/credito.entity';
 import { Gasto, GastoSchema } from '../gasto/entities/gasto.entity';
 import { Cliente, ClienteSchema } from '../cliente/entities/cliente.entity';
@@ -13,8 +13,8 @@ import { Retiro, RetiroSchema } from '../retiro/entities/retiro.entity';
 import { Caja, CajaSchema } from '../caja/entities/caja.entity';
 import { CajaModule } from '../caja/caja.module';
 import { LogRuta, LogRutaSchema } from './entities/log-ruta';
-import { MomentService } from 'src/common/plugins/moment/moment.service';
-import { MessageModule } from 'src/message/message.module';
+import { MomentService } from '../common/plugins/moment/moment.service';
+import { MessageModule } from '../message/message.module';
 
 @Module({
   imports: [
@@ -61,4 +61,4 @@ import { MessageModule } from 'src/message/message.module';
   providers: [RutaService, MomentService],
   exports: [RutaService, MongooseModule]
 })
-export class RutaModule {}
+export class RutaModule { }

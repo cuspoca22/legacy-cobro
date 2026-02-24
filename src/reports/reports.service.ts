@@ -7,7 +7,7 @@ import { Transporter, createTransport } from 'nodemailer';
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 import { Credito } from '../credito/entities/credito.entity';
-import { Empresa } from 'src/empresa/entities/empresa.entity';
+import { Empresa } from '../empresa/entities/empresa.entity';
 import { MomentService } from '../common/plugins/moment/moment.service';
 import { ConfigService } from '@nestjs/config';
 import { Ruta } from '../ruta/entities/ruta.entity';

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreatePruebaDto } from './dto/create-prueba.dto';
 import { UpdatePruebaDto } from './dto/update-prueba.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Credito } from 'src/credito/entities/credito.entity';
+import { Credito } from '../credito/entities/credito.entity';
 import { Model } from 'mongoose';
 import { RutaService } from '../ruta/ruta.service';
 

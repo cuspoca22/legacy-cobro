@@ -9,7 +9,7 @@ import { Gasto } from '../gasto/entities/gasto.entity';
 import { Retiro } from '../retiro/entities/retiro.entity';
 import { Inversion } from '../inversion/entities/inversion.entity';
 import { Pago } from '../pago/entities/pago.entity';
-import { User } from 'src/auth/entities/user.entity';
+import { User } from '../auth/entities/user.entity';
 import { AuthService } from '../auth/auth.service';
 import { CierreCaja } from './entities/cierre_caja.entity';
 import { RutaService } from '../ruta/ruta.service';

@@ -2,11 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe 
 import { PruebasService } from './pruebas.service';
 import { CreatePruebaDto } from './dto/create-prueba.dto';
 import { UpdatePruebaDto } from './dto/update-prueba.dto';
-import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe';
+import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
 
 @Controller('pruebas')
 export class PruebasController {
-  constructor(private readonly pruebasService: PruebasService) {}
+  constructor(private readonly pruebasService: PruebasService) { }
 
   @Post()
   create(@Body() createPruebaDto: CreatePruebaDto) {

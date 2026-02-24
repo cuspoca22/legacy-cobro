@@ -4,7 +4,7 @@ import { ListGastoController } from './list-gasto.controller';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ListGasto, ListGastoSchema } from './entities/list-gasto.entity';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
@@ -21,4 +21,4 @@ import { AuthModule } from 'src/auth/auth.module';
   providers: [ListGastoService],
   exports: [ListGastoService, MongooseModule]
 })
-export class ListGastoModule {}
+export class ListGastoModule { }

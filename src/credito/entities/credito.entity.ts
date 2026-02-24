@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { Pago } from '../../pago/entities/pago.entity';
 import { Cliente } from '../../cliente/entities/cliente.entity';
-import { Ruta } from 'src/ruta/entities/ruta.entity';
+import { Ruta } from '../../ruta/entities/ruta.entity';
 
 @Schema()
 export class Credito extends Document {

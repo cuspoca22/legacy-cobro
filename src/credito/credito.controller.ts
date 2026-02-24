@@ -4,13 +4,13 @@ import { CreateCreditoDto } from './dto/create-credito.dto';
 import { UpdateCreditoDto } from './dto/update-credito.dto';
 import { Auth, GetUser } from '../auth/decorators';
 import { GlobalParams } from '../common/dto/global-params.dto';
-import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe';
+import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
 import { User } from '../auth/entities/user.entity';
 
 @Auth()
 @Controller('credito')
 export class CreditoController {
-  constructor(private readonly creditoService: CreditoService) {}
+  constructor(private readonly creditoService: CreditoService) { }
 
   @Post()
   create(@Body() createCreditoDto: CreateCreditoDto) {
@@ -39,7 +39,7 @@ export class CreditoController {
 
   @Patch(':id')
   async update(
-    @Param('id') id: string, 
+    @Param('id') id: string,
     @Body() updateCreditoDto: UpdateCreditoDto,
     @Query('fecha') fecha: string,
   ) {
@@ -48,10 +48,10 @@ export class CreditoController {
 
   @Patch('turno/:id')
   async updateTurno(
-    @Param('id') id: string, 
+    @Param('id') id: string,
     @Body() updateCreditoDto: UpdateCreditoDto,
   ) {
-    return await this.creditoService.updateTurno( id, updateCreditoDto );
+    return await this.creditoService.updateTurno(id, updateCreditoDto);
   }
 
   @Delete(':id')

@@ -4,13 +4,13 @@ import { PagoController } from './pago.controller';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Pago, PagoSchema } from './entities/pago.entity';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 import { Credito, CreditoSchema } from '../credito/entities/credito.entity';
-import { Cliente, ClienteSchema } from 'src/cliente/entities/cliente.entity';
+import { Cliente, ClienteSchema } from '../cliente/entities/cliente.entity';
 import { CreditoModule } from '../credito/credito.module';
 import { RutaModule } from '../ruta/ruta.module';
 import { CajaModule } from '../caja/caja.module';
-import { MomentService } from 'src/common/plugins/moment/moment.service';
+import { MomentService } from '../common/plugins/moment/moment.service';
 
 @Module({
   imports: [
@@ -38,4 +38,4 @@ import { MomentService } from 'src/common/plugins/moment/moment.service';
   providers: [PagoService, MomentService],
   exports: [PagoService, MongooseModule]
 })
-export class PagoModule {}
+export class PagoModule { }

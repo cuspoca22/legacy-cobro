@@ -4,8 +4,8 @@ import { UpdateGastoDto } from './dto/update-gasto.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Gasto } from './entities/gasto.entity';
 import { Model } from 'mongoose';
-import { GlobalParams } from 'src/common/dto/global-params.dto';
-import { CajaService } from 'src/caja/caja.service';
+import { GlobalParams } from '../common/dto/global-params.dto';
+import { CajaService } from '../caja/caja.service';
 import { RutaService } from '../ruta/ruta.service';
 import { User } from '../auth/entities/user.entity';
 import { MomentService } from '../common/plugins/moment/moment.service';
@@ -22,11 +22,11 @@ export class GastoService {
     private cajaService: CajaService,
     private rutaService: RutaService,
     private moment: MomentService,
-  ) {}
+  ) { }
 
   async create(createGastoDto: CreateGastoDto): Promise<boolean> {
     try {
-      
+
       await this.gastoModel.create(createGastoDto);
       await this.cajaService.currentCaja(createGastoDto.ruta, this.moment.fecha(createGastoDto.fecha, 'YYYY-MM-DD'));
       return true;
@@ -35,11 +35,11 @@ export class GastoService {
 
       this.handleException(error)
 
-    } 
+    }
   }
 
   async findByDate(globalParams: GlobalParams) {
-    
+
     const fecha = new Date(globalParams.fecha);
 
     return await this.gastoModel.find({
@@ -61,7 +61,7 @@ export class GastoService {
 
   }
 
-  async findAll({ruta}: GlobalParams): Promise<Gasto[]> {  
+  async findAll({ ruta }: GlobalParams): Promise<Gasto[]> {
     return await this.gastoModel.find({ ruta });
   }
 
@@ -70,10 +70,10 @@ export class GastoService {
   }
 
   async update(id: string, updateGastoDto: UpdateGastoDto) {
-    
+
     try {
-      
-      const { ruta } = await this.gastoModel.findByIdAndUpdate(id, updateGastoDto, {new: true});
+
+      const { ruta } = await this.gastoModel.findByIdAndUpdate(id, updateGastoDto, { new: true });
       await this.cajaService.actualizarCaja(undefined, `${ruta}`);
 
       return true;
@@ -90,7 +90,7 @@ export class GastoService {
 
   private handleException(error: any) {
 
-    if(error.code === 11000) throw new BadRequestException("Ya existe ese gasto");
+    if (error.code === 11000) throw new BadRequestException("Ya existe ese gasto");
 
     this.logger.error(error);
     throw new InternalServerErrorException("revisa el logs");

@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { CajaService } from './caja.service';
 import { CreateCajaDto } from './dto/create-caja.dto';
 import { UpdateCajaDto } from './dto/update-caja.dto';
-import { Auth, GetUser } from 'src/auth/decorators';
+import { Auth, GetUser } from '../auth/decorators';
 import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe';
 import { GlobalParams } from '../common/dto/global-params.dto';
 import { User } from '../auth/entities/user.entity';
@@ -10,7 +10,7 @@ import { User } from '../auth/entities/user.entity';
 @Auth()
 @Controller('caja')
 export class CajaController {
-  constructor(private readonly cajaService: CajaService) {}
+  constructor(private readonly cajaService: CajaService) { }
 
   @Post()
   create(@Body() createCajaDto: CreateCajaDto) {
@@ -30,7 +30,7 @@ export class CajaController {
     @Query("ruta", ParseMongoIdPipe) ruta: string,
     @Query("fecha") fecha: string,
   ) {
-    return this.cajaService.currentCaja(ruta,fecha);
+    return this.cajaService.currentCaja(ruta, fecha);
   }
 
   @Get(":id")

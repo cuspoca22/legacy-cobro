@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from "mongoose";
-import { Caja } from 'src/caja/entities/caja.entity';
+import { Caja } from '../../caja/entities/caja.entity';
 import { Empresa } from '../../empresa/entities/empresa.entity';
 
 @Schema()

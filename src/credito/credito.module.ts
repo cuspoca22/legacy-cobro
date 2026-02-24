@@ -8,7 +8,7 @@ import { Cliente, ClienteSchema } from '../cliente/entities/cliente.entity';
 import { CajaModule } from '../caja/caja.module';
 import { AuthModule } from '../auth/auth.module';
 import { ClienteModule } from '../cliente/cliente.module';
-import { RutaSchema } from 'src/ruta/entities/ruta.entity';
+import { RutaSchema } from '../ruta/entities/ruta.entity';
 import { Ruta } from '../ruta/entities/ruta.entity';
 import { MomentService } from '../common/plugins/moment/moment.service';
 import { EmpresaModule } from '../empresa/empresa.module';
@@ -39,4 +39,4 @@ import { EmpresaModule } from '../empresa/empresa.module';
   providers: [CreditoService, MomentService],
   exports: [CreditoService, MongooseModule]
 })
-export class CreditoModule {}
+export class CreditoModule { }

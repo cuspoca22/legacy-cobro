@@ -5,7 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Pago } from './entities/pago.entity';
 import { Model } from 'mongoose';
 import { CreditoService } from '../credito/credito.service';
-import { GlobalParams } from 'src/common/dto/global-params.dto';
+import { GlobalParams } from '../common/dto/global-params.dto';
 import { PagoResponse } from './interfaces/pago-response.interface';
 import { CajaService } from '../caja/caja.service';
 import { MomentService } from '../common/plugins/moment/moment.service';
